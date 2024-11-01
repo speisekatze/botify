@@ -3,7 +3,22 @@
 {% block script %}
 <script>
     $( document ).ready(function() {
-
+        setInterval(function() {
+            $.getJSON('current/', function(data, status) {
+                console.info(data);
+                $('#device').text(data['device']);
+                $('#songname').text(data['name']);
+                let artists = data['artists'];
+                let artist_string = "";
+                artists.forEach((element, key, arr) => {
+                    console.info(element['name']);
+                    artist_string += element['name'];
+                    if (key+1 < arr.length) { artist_string += ", "};
+                });
+                $('#artist').text(artist_string);
+                $('#current_img').attr('src', data['image']);
+            });
+        }, 15000);
     });
 
 </script>
@@ -11,14 +26,27 @@
 {% endblock script %}
 {% block content %}
 <div class="parent">
-    <div class="div1">
-        <span class="headline">Spotify Playlist Manager</span>
-        <span class="head_user">Hallo, {{ username }}</span>
+    <div class="div7">
         {% if pi %}
-        <div class="head_info"><span class="pre">Du hörst gerade auf <span class="device">{{ pi.device }}</span>: </span><img src="{{ pi.image }}" alt="albumcover" /> <span class="track"><span class="song">{{ pi.name }}</span><span class="artist">{% for artist in pi.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span></span></div>
+        <div class="head_info">
+            <span class="pre">Du hörst gerade auf 
+                <span id="device" class="device">{{ pi.device }}</span>: 
+            </span>
+            <img id="current_img" src="{{ pi.image }}" alt="albumcover" /> 
+            <span class="track">
+                <span id="songname" class="song">{{ pi.name }}</span>
+                <span id="artist" class="artist">{% for artist in pi.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+            </span>
+        </div>
         {% else %}
         <div class="head_info">Du hörst gerade nichts.</div>
         {% endif %}
+    </div>
+    <div class="div1">
+        <span class="headline"><img class="spotify_logo" alt="Spotify" src="{% static "spotify/img/spotify.svg" %}"> <span class="headline_text">Playlist Manager</span></span>
+    </div>
+    <div class="div8">
+        <span class="head_user">Hallo, {{ username }}</span>
     </div>
     <div class="div2">
         <ol class="playlists">

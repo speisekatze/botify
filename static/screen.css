@@ -1,3 +1,7 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Exo+2);
+@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
 :root {
     --background-base: #121212;
     --background-highlight: #1f1f1f;
@@ -15,6 +19,8 @@
     --text-warning: #ffa42b;
     --text-positive: #1ed760;
     --text-announcement: #4cb3ff;
+    --text-dark-high: hsla(0,0%,100%,.18);
+    --text-dark: hsla(0,0%,100%,.09);
     --essential-base: #fff;
     --essential-subdued: #7c7c7c;
     --essential-bright-accent: #1ed760;
@@ -31,7 +37,7 @@ html {
 
 body {
 	background-color: var(--background-base);
-	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: 'Varela Round', sans-serif;
 	font-size: .8em;
 	padding: 2px;
 	margin: 0;
@@ -40,6 +46,14 @@ body {
 
 img {
 	border: 0
+}
+
+footer#django {
+	color: var(--text-dark);
+}
+footer#django a {
+	color: var(--text-dark-high);
+	font-weight: 700;
 }
 
 a {
@@ -383,12 +397,7 @@ h1.menuHeadStatic span, .navigation {
 	display: inline-block;
 }
 
-.headline {
-	padding-left: 18px;
-	display: inline-block;
-	color: #1f327f;
-	font-size: .9em
-}
+
 .menuExpandStatic {
 	border: 1px solid #cdd;
 	padding-left: 10px;
