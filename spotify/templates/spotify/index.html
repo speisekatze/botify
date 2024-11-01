@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block script %}
+<script>
+    $( document ).ready(function() {
+
+    });
+
+</script>
+
+{% endblock script %}
+{% block content %}
+<div class="parent">
+    <div class="div1">
+        <span class="headline">Spotify Playlist Manager</span>
+        <span class="head_user">Hallo, {{ username }}</span>
+        {% if pi %}
+        <div class="head_info"><span class="pre">Du hörst gerade auf <span class="device">{{ pi.device }}</span>: </span><img src="{{ pi.image }}" alt="albumcover" /> <span class="track"><span class="song">{{ pi.name }}</span><span class="artist">{% for artist in pi.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span></span></div>
+        {% else %}
+        <div class="head_info">Du hörst gerade nichts.</div>
+        {% endif %}
+    </div>
+    <div class="div2">
+        <ol class="playlists">
+            {% for pl in playlists %}
+            <li><img src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span></li>
+            {% endfor %}
+        </ol>
+    </div>
+    <div class="div3">3</div>
+    <div class="div4">4</div>
+    <div class="div5">5</div>
+    <div class="div6">
+        <footer id="django" role="contentinfo">
+            <p>Powered by <a href="http://www.djangoproject.com">Django</a>.</p>
+        </footer>
+    </div>
+</div>
+{% endblock content %}
