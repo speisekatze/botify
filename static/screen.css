@@ -61,23 +61,6 @@ a {
 	color: var(--text-base);
 }
 
-a.text {
-	font-weight: 700
-}
-
-a.text:hover {
-	text-decoration: none
-}
-
-#footer {
-	background-image: url(img/footxrepeat.jpg);
-	height: 10px;
-	clear: both;
-	text-align: center;
-	font-size: .8em;
-	font-weight: 700;
-	display: inline;
-}
 
 #django {
 	height: 10px;
@@ -85,50 +68,6 @@ a.text:hover {
 	text-align: center;
 	font-size: .8em;
 	font-weight: 700
-}
-
-#footer_left {
-	background: url(img/footleft2.jpg) no-repeat;
-	float: left;
-	min-width: 24px;
-	height: 10px
-}
-
-#footer_right {
-	background: url(img/footright2.jpg) no-repeat;
-	float: right;
-	width: 25px;
-	min-width: 25px;
-	height: 10px
-}
-
-.footer_headline {
-	float: left;
-	margin-left: 20px;
-	margin-top: 10px
-}
-
-
-label {
-	color: #000;
-	font-weight: 400;
-	padding-top: .3em;
-	margin: .1em;
-	vertical-align: middle
-}
-
-label.left {
-	float: left;
-	text-align: right;
-	width: 150px;
-	color: #000;
-	margin: 5px
-}
-
-label.right {
-	text-align: right;
-	color: #000;
-	margin-left: 2em
 }
 
 
@@ -145,13 +84,6 @@ input {
 	color: #1f327f
 }
 
-input.button {
-	border: 1px solid #000
-}
-
-input:hover {
-	background-color: #fff8dc
-}
 
 @-webkit-keyframes plswait-circleFadeDelay {
 	0%,
