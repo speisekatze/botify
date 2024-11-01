@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block script %}
+<script>
+    $( document ).ready(function() {
+
+    });
+
+</script>
+
+{% endblock script %}
+{% block content %}
+<form id="sucheForm" action="/dba/" method="post">
+{% csrf_token %}
+    <h3 id="filterMenu" class="menuHeadStatic" style="margin-top:-1px;">
+        <span class="headline" style="text-align:left;width:80%;">Voreinstellungen</span>
+    </h3>
+</div>
+</form>
+{% endblock content %}
