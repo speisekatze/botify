@@ -1,0 +1,5 @@
+spotify:
+    client_id: <Spotify App Client ID>
+    client_secret: <Spotify App Client Secret>
+    redirect: <http://<server.name:8000>/callback>
+    scope: playlist-modify-public, user-read-playback-state, user-read-currently-playing, playlist-read-private, playlist-modify-private
