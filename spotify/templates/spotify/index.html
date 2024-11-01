@@ -17,6 +17,7 @@
                 });
                 $('#artist').text(artist_string);
                 $('#current_img').attr('src', data['image']);
+                $('#status').text(data['status']);
             });
         }, 15000);
     });
@@ -26,22 +27,6 @@
 {% endblock script %}
 {% block content %}
 <div class="parent">
-    <div class="div7">
-        {% if pi %}
-        <div class="head_info">
-            <span class="pre">Du hörst gerade auf 
-                <span id="device" class="device">{{ pi.device }}</span>: 
-            </span>
-            <img id="current_img" src="{{ pi.image }}" alt="albumcover" /> 
-            <span class="track">
-                <span id="songname" class="song">{{ pi.name }}</span>
-                <span id="artist" class="artist">{% for artist in pi.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
-            </span>
-        </div>
-        {% else %}
-        <div class="head_info">Du hörst gerade nichts.</div>
-        {% endif %}
-    </div>
     <div class="div1">
         <span class="headline"><img class="spotify_logo" alt="Spotify" src="{% static "spotify/img/spotify.svg" %}"> <span class="headline_text">Playlist Manager</span></span>
     </div>
@@ -58,6 +43,19 @@
     <div class="div3">3</div>
     <div class="div4">4</div>
     <div class="div5">5</div>
+    <div class="div9"></div>
+    <div class="div7">
+        <div class="head_info">
+            <span class="pre"><span id="status">{{ pi.status }}</span>
+                <span id="device" class="device">{{ pi.device }}</span>
+            </span>
+            <img id="current_img" src="{{ pi.image }}" alt="albumcover" /> 
+            <span class="track">
+                <span id="songname" class="song">{{ pi.name }}</span>
+                <span id="artist" class="artist">{% for artist in pi.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+            </span>
+        </div>
+    </div>
     <div class="div6">
         <footer id="django" role="contentinfo">
             <p>Powered by <a href="http://www.djangoproject.com">Django</a>.</p>

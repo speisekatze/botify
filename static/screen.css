@@ -159,15 +159,16 @@ br.end {
 
 #footer {
 	background-image: url(img/footxrepeat.jpg);
-	height: 30px;
+	height: 10px;
 	clear: both;
 	text-align: center;
 	font-size: .8em;
-	font-weight: 700
+	font-weight: 700;
+	display: inline;
 }
 
 #django {
-	height: 30px;
+	height: 10px;
 	clear: both;
 	text-align: center;
 	font-size: .8em;
@@ -178,7 +179,7 @@ br.end {
 	background: url(img/footleft2.jpg) no-repeat;
 	float: left;
 	min-width: 24px;
-	height: 30px
+	height: 10px
 }
 
 #footer_right {
@@ -186,7 +187,7 @@ br.end {
 	float: right;
 	width: 25px;
 	min-width: 25px;
-	height: 30px
+	height: 10px
 }
 
 .footer_headline {

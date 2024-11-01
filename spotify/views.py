@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.views.generic import TemplateView, View
+from django.conf.urls.static import static
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import yaml
@@ -35,16 +36,35 @@ def get_default_context():
     return context
 
 def get_smallest_image_url(images):
+    picked_image = 'static/spotify/img/musicnote.png'
     if images is None:
-        return ''
+        return picked_image
     height = 0
-    picked_image = None
     for image in images:
         if image['height'] is None or image['height'] < height or height == 0:
             height == image['height']
             picked_image = image['url']
     return picked_image
 
+def get_playback_info(sp):
+    cp = sp.current_playback()
+    playback_info = {}
+    playback_info['artists'] = [{'name': ''}]
+    playback_info['name'] = ''
+    playback_info['uri'] = ''
+    playback_info['device'] = ''
+    playback_info['image'] = 'static/spotify/img/musicnote.png'
+    playback_info['left'] = ''
+    playback_info['status'] = ''
+    if cp is not None and cp['is_playing']:
+        playback_info['device'] = cp['device']['name']
+        playback_info['artists'] = cp['item']['artists']
+        playback_info['name'] = cp['item']['name']
+        playback_info['uri'] = cp['item']['uri']
+        playback_info['left'] = cp['item']['duration_ms'] - cp['progress_ms']
+        playback_info['image'] = get_smallest_image_url(cp['item']['album']['images'])
+        playback_info['status'] = 'Playing on '
+    return playback_info
 class SpotifyIndex(TemplateView):
     template_name = "spotify/index.html"
     
@@ -61,16 +81,8 @@ class SpotifyIndex(TemplateView):
         user = sp.me()
         context['username'] = user['display_name']
         context['userlink'] = user['external_urls']
-        cp = sp.current_playback()
-        if cp is not None and cp['is_playing']:
-            playback_info = {}
-            playback_info['device'] = cp['device']['name']
-            playback_info['artists'] = cp['item']['artists']
-            playback_info['name'] = cp['item']['name']
-            playback_info['uri'] = cp['item']['uri']
-            playback_info['left'] = cp['item']['duration_ms'] - cp['progress_ms']
-            playback_info['image'] = get_smallest_image_url(cp['item']['album']['images'])
-            context['pi'] = playback_info
+
+        context['pi'] = get_playback_info(sp)
         pl = sp.current_user_playlists()
         playlists = []
         for item in pl['items']:
@@ -78,7 +90,7 @@ class SpotifyIndex(TemplateView):
             plist['image'] = get_smallest_image_url(item['images'])
             plist['id'] = item['id']
             plist['uri'] = item['uri']
-            plist['name'] = item['name']
+            plist['name'] = item['name'][:32]
             playlists.append(plist)
         context['playlists'] = playlists
         return self.render_to_response(context)
@@ -99,15 +111,5 @@ def current(request):
     sp=getSpotify(request)
     if sp.auth_manager.cache_handler.get_cached_token() is None:
         return redirect(sp.auth_manager.get_authorize_url())
-    
-    cp = sp.current_playback()
-    playback_info = {}
-    if cp is not None and cp['is_playing']:
-        playback_info['device'] = cp['device']['name']
-        playback_info['artists'] = cp['item']['artists']
-        playback_info['name'] = cp['item']['name']
-        playback_info['uri'] = cp['item']['uri']
-        playback_info['image'] = get_smallest_image_url(cp['item']['album']['images'])
-        playback_info['left'] = cp['item']['duration_ms'] - cp['progress_ms']
-
+    playback_info = get_playback_info(sp)
     return HttpResponse(json.dumps(playback_info),content_type='application/json')

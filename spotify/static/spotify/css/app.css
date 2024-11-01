@@ -5,29 +5,33 @@ img.spotify_logo {
 }
 .parent {
     display: grid;
-    grid-template-columns: 300px repeat(6, 1fr);
-    grid-template-rows: 100px repeat(3, 1fr) 40px;
-    gap: 8px;
+    grid-template-columns: 300px 350px repeat(3, 1fr) 350px 300px;
+    grid-template-rows: 60px repeat(3, 1fr) 6px 66px 10px;
+    gap: 0px;
 }
 
 .div7 {
-    grid-column: 1 / 3;
-    height: 100px
+    grid-column: 2 / span 5;
+    grid-row-start: 6;
+    height: 66px;
+    background: rgb(0,0,0);
+    /*background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(91,91,91,1) 66%, rgba(180,180,180,1) 100%);*/
+    border-radius: 60px;
 }
 .div1 {
-    grid-column: 3 / 6;
-    height: 100px
+    grid-column: 2 / 7;
+    height: 60px
 }
 
 .div8 {
     grid-column: 7 / 7;
-    height: 100px
+    height: 60px
 }
 
 .div2 {
     grid-row: span 3 / span 3;
     grid-row-start: 2;
-    height: calc(100vh - 20px - 40px - 100px);
+    height: calc(100vh - 20px - 10px - 60px - 66px - 6px);
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -63,11 +67,19 @@ img.spotify_logo {
 }
 
 .div6 {
-    grid-column: span 5 / span 5;
-    grid-row-start: 5;
-    height: 40px;
+    grid-column: span 7 / span 7;
+    grid-row-start: 7;
+    height: 10px;
 }
 
+.div9 {
+    grid-column: span 7 / span 7;
+    grid-row-start: 5;
+    height: 6px;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(91,91,91,1) 66%, rgba(180,180,180,1) 100%);
+    border-radius: 60px;
+}
 
 span.headline {
 	font-size: 2.1em;
@@ -87,7 +99,9 @@ span.head_user {
 	font-size: 1.3em;
 	font-weight: 200;
 	display: block;
-	text-align: center;
+	text-align: right;
+	padding-top: 23px;
+    padding-right: 23px;
 	color: var(--text-announcement);
 }
 
@@ -96,8 +110,7 @@ div.head_info {
 	font-weight: 100;
 	display: block;
 	text-align: left;
-	padding-left: 10%;
-	padding-top: 23px;
+	padding-left: 5%;
 	color: var(--text-subdued);
 }
 
@@ -108,7 +121,7 @@ div.head_info > span.track {
     padding-left: 18px;
 }
 div.head_info > span.pre {
-	display: none;
+	display: inline-block;
 	top: -25px;
     position: relative;
     padding-right: 18px;
