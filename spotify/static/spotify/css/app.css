@@ -251,8 +251,8 @@ span.maybelong span  {
     display:inline-block;
     animation-name: marquee_back_forth;
     animation-duration: 10s;
-    animation-timing-function: linear;
-    animation-delay: 1s;
+    animation-timing-function: cubic-bezier(0.6, 0, 0.4, 1);
+    animation-delay: 4s;
     animation-iteration-count: infinite;
     animation-direction: normal;
     animation-fill-mode: both;
@@ -339,11 +339,7 @@ span.wrapper {
     font-size: 1.1em;
 	display: block;
 }
-.playlist_desc {
-	font-weight: 400;
-    font-size: 0.8em;
-	display: block;
-}
+
 .playlist_count {
 	font-weight: 400;
     font-size: 0.8em;
@@ -356,13 +352,7 @@ span.wrapper {
 }
 
 @keyframes marquee_back_forth {
-    20% {
-        transform: translateX(0%)
-    }
-    40%, 60% {
-        transform: translateX(clamp(-100%,calc(-100% + 200px), 0%))
-    }
-    80% {
-        transform: translateX(0%)
-    }
+    5% { transform: translateX(0%) }
+    40%, 60% { transform: translateX(clamp(-100%,calc(-100% + 200px), 0%)) }
+    95% { transform: translateX(0%) }
 }

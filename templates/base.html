@@ -18,16 +18,7 @@
     {% block script %}{% endblock script %}
   </head>
   <body>
-    <div id="waitContainer">
-        <div id="waitAnim">
-        <div class="dot eins"></div>
-        <div class="dot zwei"></div>
-        <div class="dot drei"></div>
-        <div class="dot vier"></div>
-        <div class="dot funf"></div>
-        <div class="dot sechs"></div>
-      </div>
-    </div>
+    <div id="waitContainer" class="waitContainer" ><div class="loader"></div></div>
     {% block content %}
     <p>Placeholder text in base template. Replace with page content.</p>
     {% endblock content %}
