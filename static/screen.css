@@ -182,6 +182,7 @@ input {
 	48% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),auto}
 	52% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),auto}
 	56% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),auto}
-	60% {transform: rotate(0deg); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	100% {transform: rotate(-180deg); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
+	60% {transform: rotate(0deg) scale(1); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
+	80% {transform: rotate(-90deg) scale(0); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
+  	100% {transform: rotate(-180deg) scale(1); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
   }

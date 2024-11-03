@@ -18,7 +18,7 @@
     <div class="div2">
         <ol class="playlists">
             {% for pl in playlists %}
-            <li id="{{ pl.uri }}"><img class="cover_small" src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span><img class="icon" src="{% static "spotify/img/trash.svg" %}" /></li>
+            <li id="{{ pl.uri }}"><img class="cover_small" src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span><img class="icon_right" src="{% static "spotify/img/trash.svg" %}" /></li>
             {% endfor %}
         </ol>
     </div>
@@ -29,12 +29,13 @@
             <img src="/static/spotify/img/musicnote.png" class="cover_vsmall" id="playlist_img" />
             <span class="wrapper">
                 <span id="playlist_name" class="playlist_name">PLaylistName</span>
-                <!-- <span id="playlist_desc" class="playlist_desc">PLaylistName</span> -->
+                <input type="hidden" id="current_playlist_uri" value="" />
                 <span id="playlist_count" class="playlist_count">PLaylistName</span>
             </span>
         </div>
         <ol id="playlist" class="playlist">
             <li id="01">
+                <img class="icon_left" src="{% static "spotify/img/trash.svg" %}" />
                 <span class="track">
                     <span id="songname_01" class="maybelong song"><span>SongSongSongSongSongSongSongSongSong</span></span>
                     <span id="artist_01" class="maybelong artist"><span>Artist</span></span>

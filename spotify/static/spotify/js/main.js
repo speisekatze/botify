@@ -22,6 +22,7 @@ $( document ).ready(function() {
             $('#playlist_name').text(pl_info['name']);
             /*$('#playlist_desc').text(pl_info['description']);*/
             $('#playlist_count').text(pl_info['trackcount']);
+            $('#current_playlist_uri').val(pl_info['uri']);
             $('#playlist_img').attr('src', pl_info['image']);
             tracks = data['tracks'];
             $('ol#playlist').empty();
@@ -35,6 +36,9 @@ $( document ).ready(function() {
                 $('ol#playlist')
                 .append(
                     $("<li>").attr('id',track['uri'])
+                    .append(
+                        $('<img/>').addClass('icon_left').attr('src', 'static/spotify/img/trash.svg')
+                    )
                     .append(
                         $('<span>').addClass('track')
                         .append(

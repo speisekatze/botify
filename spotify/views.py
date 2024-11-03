@@ -126,6 +126,7 @@ def load_playlist(request, uri):
     data['playlist']['description'] = playlist['description']
     data['playlist']['image'] = get_smallest_image_url(playlist['images'])
     data['playlist']['trackcount'] = playlist['tracks']['total']
+    data['playlist']['uri'] = playlist['uri']
     limit = 100
     offset = 0
     tracks = []
