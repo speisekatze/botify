@@ -5,13 +5,11 @@
     $( document ).ready(function() {
         setInterval(function() {
             $.getJSON('current/', function(data, status) {
-                console.info(data);
                 $('#device').text(data['device']);
                 $('#songname').text(data['name']);
                 let artists = data['artists'];
                 let artist_string = "";
                 artists.forEach((element, key, arr) => {
-                    console.info(element['name']);
                     artist_string += element['name'];
                     if (key+1 < arr.length) { artist_string += ", "};
                 });
@@ -20,13 +18,60 @@
                 $('#status').text(data['status']);
             });
         }, 15000);
+        $('ol.playlists li').on('click', function(event) {
+            $('#waitContainer').show();
+            $.getJSON('loadplaylist/'+event.target.id, function(data, status) {
+                console.info(data);
+                pl_info = data['playlist'];
+                $('#playlist_name').text(pl_info['name']);
+                /*$('#playlist_desc').text(pl_info['description']);*/
+                $('#playlist_count').text(pl_info['trackcount']);
+                $('#playlist_img').attr('src', pl_info['image']);
+                tracks = data['tracks'];
+                $('ol#playlist').empty();
+                tracks.forEach((track) => {
+                    let artists = track['artists'];
+                    let artist_string = "";
+                    artists.forEach((element, key, arr) => {
+                        artist_string += element['name'];
+                        if (key+1 < arr.length) { artist_string += ", "};
+                    });
+                    $('ol#playlist')
+                    .append(
+                        $("<li>").attr('id',track['uri'])
+                        .append(
+                            $('<span>').addClass('track')
+                            .append(
+                                $('<span>').addClass('maybelong song')
+                                .append(
+                                    $('<span>').text(track['name'])
+                                )
+                            )
+                            .append(
+                                $('<span>').addClass('maybelong artist')
+                                .append(
+                                    $('<span>').text(artist_string)
+                                )
+                            )
+                        )
+                        .append(
+                            $('<img/>').addClass('cover_vsmall').attr('src', track['image'])
+                        )
+                    );
+                });
+                $('#waitContainer').hide()
+            });
+        });
     });
 
 </script>
 
 {% endblock script %}
 {% block content %}
+<div class="noise">
+</div>
 <div class="parent">
+    <div class="div10"></div>
     <div class="div1">
         <span class="headline"><img class="spotify_logo" alt="Spotify" src="{% static "spotify/img/spotify.svg" %}"> <span class="headline_text">Playlist Manager</span></span>
     </div>
@@ -36,26 +81,55 @@
     <div class="div2">
         <ol class="playlists">
             {% for pl in playlists %}
-            <li><img src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span></li>
+            <li id="{{ pl.uri }}"><img class="cover_small" src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span></li>
             {% endfor %}
         </ol>
     </div>
     <div class="div3">3</div>
     <div class="div4">4</div>
-    <div class="div5">5</div>
-    <div class="div9"></div>
-    <div class="div7">
-        <div class="head_info">
-            <span class="pre"><span id="status">{{ pi.status }}</span>
-                <span id="device" class="device">{{ pi.device }}</span>
-            </span>
-            <img id="current_img" src="{{ pi.image }}" alt="albumcover" /> 
-            <span class="track">
-                <span id="songname" class="song">{{ pi.name }}</span>
-                <span id="artist" class="artist">{% for artist in pi.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+    <div class="div5">
+        <div id="playlist_info" class="playlist_info">
+            <img src="/static/spotify/img/musicnote.png" class="cover_vsmall" id="playlist_img" />
+            <span class="wrapper">
+                <span id="playlist_name" class="playlist_name">PLaylistName</span>
+                <!-- <span id="playlist_desc" class="playlist_desc">PLaylistName</span> -->
+                <span id="playlist_count" class="playlist_count">PLaylistName</span>
             </span>
         </div>
+        <ol id="playlist" class="playlist">
+            <li id="01">
+                <span class="track">
+                    <span id="songname_01" class="maybelong song"><span>SongSongSongSongSongSongSongSongSong</span></span>
+                    <span id="artist_01" class="maybelong artist"><span>Artist</span></span>
+                </span>
+                <img id="cover_01" class="cover_vsmall" src="static/spotify/img/musicnote.png" alt="albumcover" />
+            </li>
+            <li id="02">
+                <span class="track">
+                    <span id="songname_02" class="song">Song2</span>
+                    <span id="artist_02" class="artist">Artist3</span>
+                </span>
+                <img id="cover_01" class="cover_vsmall" src="static/spotify/img/musicnote.png" alt="albumcover" />
+            </li>
+        </ol>
     </div>
+    <div class="div9"></div>
+    <div class="div11"></div>
+    <div class="div7">
+        <div class="player">
+            <div class="head_info">
+                <span class="pre"><span id="status">{{ pi.status }}</span>
+                    <span id="device" class="device">{{ pi.device }}</span>
+                </span>
+                <img id="current_img" class="cover" src="{{ pi.image }}" alt="albumcover" /> 
+                <span class="track">
+                    <span id="songname" class="song">{{ pi.name }}</span>
+                    <span id="artist" class="artist">{% for artist in pi.artists %}{{ artist.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="div12"></div>
     <div class="div6">
         <footer id="django" role="contentinfo">
             <p>Powered by <a href="http://www.djangoproject.com">Django</a>.</p>

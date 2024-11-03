@@ -18,12 +18,18 @@
     {% block script %}{% endblock script %}
   </head>
   <body>
-
-
-                        {% block content %}
-                        <p>Placeholder text in base template. Replace with page content.</p>
-                        {% endblock content %}
-
-
+    <div id="waitContainer">
+        <div id="waitAnim">
+        <div class="dot eins"></div>
+        <div class="dot zwei"></div>
+        <div class="dot drei"></div>
+        <div class="dot vier"></div>
+        <div class="dot funf"></div>
+        <div class="dot sechs"></div>
+      </div>
+    </div>
+    {% block content %}
+    <p>Placeholder text in base template. Replace with page content.</p>
+    {% endblock content %}
   </body>
 </html>
