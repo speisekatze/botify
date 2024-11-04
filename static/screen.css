@@ -118,71 +118,45 @@ input {
 	--s:36px 36px;
 	-webkit-mask:
 	  var(--c) left 4px top 50%,
-	  var(--c) left calc((1*36px) + 4px) top 50%,
-	  var(--c) left calc((2*36px) + 4px) top 50%,
-	  var(--c) left calc((3*36px) + 4px) top 50%,
-	  var(--c) left calc((4*36px) + 4px) top 50%,
-	  var(--c) left calc((5*36px) + 4px) top 50%,
-	  var(--c) left calc((6*36px) + 4px) top 50%,
-	  var(--c) left calc((7*36px) + 4px) top 50%,
-	  var(--c) left calc((8*36px) + 4px) top 50%,
-	  var(--c) left calc((9*36px) + 4px) top 50%,
-	  var(--c) left calc((10*36px) + 4px) top 50%,
-	  var(--c) left calc((11*36px) + 4px) top 50%,
 	  linear-gradient(#000 0 0);
 	-webkit-mask-composite:xor;
 			mask-composite:exclude;
 	animation: l1 4s infinite;
 	transform: rotate(0deg);
-  }
-  .waitContainer  {
+}
+.waitContainer  {
 	display: none;
 	z-index: 100;
 	position: absolute;
-  }
-  .waitContainer::before {
-	z-index: 100;
-	content: "";
-	position: absolute;
 	top: 0px;
 	left: 0px;
+}
+.waitContainer::before {
+	z-index: 100;
+	content: "";
+    overflow: hidden;
+    position: absolute;
 	width: 100vw;
 	height: 100vh;
 	background-color: #191919;
 	opacity: 90%;
-  }
-  .waitContainer::after {
+}
+.waitContainer::after {
 	content: "";
 	z-index: 101;
-    background-image: url('spotify/img/noise.svg');
-    height: 100vh;
-    width: 100vw;
+	background-image: url('spotify/img/noise.svg');
+	height: 100vh;
+	width: 100vw;
     overflow: hidden;
     position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 1;
-    mix-blend-mode: screen;
-    opacity: 25%;
-    transform: translateZ(10px);
-  }
-  @keyframes l1 {
-	0%  {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	4%  {-webkit-mask-size:var(--s),0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	8% {-webkit-mask-size:var(--s),var(--s),0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	12% {-webkit-mask-size:var(--s),var(--s),var(--s),0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	16% {-webkit-mask-size:0    0  ,var(--s),var(--s),var(--s),0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	20% {-webkit-mask-size:0    0  ,0    0  ,var(--s),var(--s),var(--s),0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	24% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	28% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	32% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	36% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),0    0  ,0    0  ,0    0  ,auto}
-	40% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),0    0  ,0    0  ,auto}
-	44% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),0    0  ,auto}
-	48% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),var(--s),auto}
-	52% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),var(--s),auto}
-	56% {-webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,var(--s),auto}
-	60% {transform: rotate(0deg) scale(1); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-	80% {transform: rotate(-90deg) scale(0); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-  	100% {transform: rotate(-180deg) scale(1); -webkit-mask-size:0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,0    0  ,auto}
-  }
+	z-index: 1;
+	mix-blend-mode: screen;
+	opacity: 25%;
+	transform: translateZ(10px);
+}
+@keyframes l1 {
+	0%   {-webkit-mask-size:var(--s), auto; -webkit-mask-position-x: 4px}
+	56%  {-webkit-mask-size:var(--s), auto; -webkit-mask-position-x: 400px}
+	60%  {transform: rotate(0deg); -webkit-mask-size:var(--s),auto; -webkit-mask-position-x: 400px}
+	100% {transform: rotate(-180deg); -webkit-mask-size:var(--s),auto; -webkit-mask-position-x: 400px}
+}

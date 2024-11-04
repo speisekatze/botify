@@ -16,8 +16,8 @@ $( document ).ready(function() {
     }, 15000);
     $('ol.playlists li').on('click', function(event) {
         $('#waitContainer').show();
-        $.getJSON('loadplaylist/'+event.target.id, function(data, status) {
-            console.info(data);
+        playlist_uri = event.currentTarget.id;
+        $.getJSON('loadplaylist/'+playlist_uri, function(data, status) {
             pl_info = data['playlist'];
             $('#playlist_name').text(pl_info['name']);
             /*$('#playlist_desc').text(pl_info['description']);*/
@@ -37,7 +37,7 @@ $( document ).ready(function() {
                 .append(
                     $("<li>").attr('id',track['uri'])
                     .append(
-                        $('<img/>').addClass('icon_left').attr('src', 'static/spotify/img/trash.svg')
+                        $('<img/>').addClass('icon_left delete').attr('src', 'static/spotify/img/trash.svg')
                     )
                     .append(
                         $('<span>').addClass('track')
