@@ -144,3 +144,7 @@ def load_playlist(request, uri):
         offset += limit
     data['tracks'] = tracks
     return HttpResponse(json.dumps(data),content_type='application/json')
+
+def delete_playlist(request, uri):
+    data = { 'status': 'OK' }
+    return HttpResponse(json.dumps(data),content_type='application/json')

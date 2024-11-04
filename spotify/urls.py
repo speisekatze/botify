@@ -9,4 +9,5 @@ urlpatterns = [
     path('callback/', views.SpotifyCallback.as_view(), name='callback'),
     path('current/', views.current, name="current"),
     path('loadplaylist/<str:uri>', views.load_playlist, name="loadpl"),
+    path('delete_playlist/<str:uri>', views.delete_playlist, name="deletepl"),
 ]

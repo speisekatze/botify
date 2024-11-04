@@ -1,3 +1,9 @@
+function test(event) {
+    alert('weg');
+    event.stopPropagation();
+    return true;
+}
+
 $( document ).ready(function() {
     setInterval(function() {
         $.getJSON('current/', function(data, status) {
@@ -14,6 +20,14 @@ $( document ).ready(function() {
             $('#status').text(data['status']);
         });
     }, 15000);
+    $('img#delete_playlist').on('click', function(event) {
+        playlist_uri = event.currentTarget.id;
+        $.getJSON('delete_playlist/'+playlist_uri, function(data, status) {
+            event.currentTarget.closest('li').remove();
+        });
+        event.stopPropagation();
+        return true;
+    });
     $('ol.playlists li').on('click', function(event) {
         $('#waitContainer').show();
         playlist_uri = event.currentTarget.id;
@@ -37,7 +51,7 @@ $( document ).ready(function() {
                 .append(
                     $("<li>").attr('id',track['uri'])
                     .append(
-                        $('<img/>').addClass('icon_left delete').attr('src', 'static/spotify/img/trash.svg')
+                        $('<img/>').addClass('icon_left delete').attr('src', 'static/spotify/img/trash.svg').attr('id', 'delete_track_from_pl').attr('uri', track['uri']).on('click', test)
                     )
                     .append(
                         $('<span>').addClass('track')

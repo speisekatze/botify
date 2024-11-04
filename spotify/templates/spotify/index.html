@@ -18,7 +18,7 @@
     <div class="div2">
         <ol class="playlists">
             {% for pl in playlists %}
-            <li id="{{ pl.uri }}"><img class="cover_small" src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span><img class="icon_right delete" src="{% static "spotify/img/trash.svg" %}" /></li>
+            <li id="{{ pl.uri }}"><img class="cover_small" src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span><img class="icon_right delete" src="{% static "spotify/img/trash.svg" %}" id="delete_playlist" uri="{{ pl.uri }}" /></li>
             {% endfor %}
         </ol>
     </div>
