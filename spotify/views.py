@@ -147,4 +147,11 @@ def load_playlist(request, uri):
 
 def delete_playlist(request, uri):
     data = { 'status': 'OK' }
+    print(uri)
+    return HttpResponse(json.dumps(data),content_type='application/json')
+
+def delete_track_from_playlist(request, playlist, track):
+    data = { 'status': 'OK' }
+    print(playlist)
+    print(track)
     return HttpResponse(json.dumps(data),content_type='application/json')

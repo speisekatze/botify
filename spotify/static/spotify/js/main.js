@@ -1,7 +1,58 @@
-function test(event) {
-    event.currentTarget.closest('li').remove();
+function delete_from_playlist(event) {
+    track_uri = event.currentTarget.getAttribute('uri');
+    console.info(track_uri);
+    playlist_uri = $('#current_playlist_uri').attr('value');
+    $.getJSON('delete_track_from_playlist/'+playlist_uri+'/'+track_uri, function(data, status) {
+        event.currentTarget.closest('li').remove();
+        $.getJSON('loadplaylist/'+playlist_uri, load_playlist);
+    });
     event.stopPropagation();
     return true;
+}
+
+function load_playlist(data, status) {
+    pl_info = data['playlist'];
+    $('#playlist_name').text(pl_info['name']);
+    /*$('#playlist_desc').text(pl_info['description']);*/
+    $('#playlist_count').text(pl_info['trackcount']);
+    $('#current_playlist_uri').val(pl_info['uri']);
+    $('#playlist_img').attr('src', pl_info['image']);
+    tracks = data['tracks'];
+    $('ol#playlist').empty();
+    tracks.forEach((track) => {
+        let artists = track['artists'];
+        let artist_string = "";
+        artists.forEach((element, key, arr) => {
+            artist_string += element['name'];
+            if (key+1 < arr.length) { artist_string += ", "};
+        });
+        $('ol#playlist')
+        .append(
+            $("<li>").attr('id',track['uri'])
+            .append(
+                $('<img/>').addClass('icon_left delete').attr('src', 'static/spotify/img/trash.svg').attr('id', 'delete_track_from_pl').attr('uri', track['uri']).on('click', delete_from_playlist)
+            )
+            .append(
+                $('<span>').addClass('track')
+                .append(
+                    $('<span>').addClass('maybelong song')
+                    .append(
+                        $('<span>').text(track['name'])
+                    )
+                )
+                .append(
+                    $('<span>').addClass('maybelong artist')
+                    .append(
+                        $('<span>').text(artist_string)
+                    )
+                )
+            )
+            .append(
+                $('<img/>').addClass('cover_vsmall').attr('src', track['image'])
+            )
+        );
+    });
+    $('#waitContainer').hide();
 }
 
 $( document ).ready(function() {
@@ -31,49 +82,6 @@ $( document ).ready(function() {
     $('ol.playlists li').on('click', function(event) {
         $('#waitContainer').show();
         playlist_uri = event.currentTarget.id;
-        $.getJSON('loadplaylist/'+playlist_uri, function(data, status) {
-            pl_info = data['playlist'];
-            $('#playlist_name').text(pl_info['name']);
-            /*$('#playlist_desc').text(pl_info['description']);*/
-            $('#playlist_count').text(pl_info['trackcount']);
-            $('#current_playlist_uri').val(pl_info['uri']);
-            $('#playlist_img').attr('src', pl_info['image']);
-            tracks = data['tracks'];
-            $('ol#playlist').empty();
-            tracks.forEach((track) => {
-                let artists = track['artists'];
-                let artist_string = "";
-                artists.forEach((element, key, arr) => {
-                    artist_string += element['name'];
-                    if (key+1 < arr.length) { artist_string += ", "};
-                });
-                $('ol#playlist')
-                .append(
-                    $("<li>").attr('id',track['uri'])
-                    .append(
-                        $('<img/>').addClass('icon_left delete').attr('src', 'static/spotify/img/trash.svg').attr('id', 'delete_track_from_pl').attr('uri', track['uri']).on('click', test)
-                    )
-                    .append(
-                        $('<span>').addClass('track')
-                        .append(
-                            $('<span>').addClass('maybelong song')
-                            .append(
-                                $('<span>').text(track['name'])
-                            )
-                        )
-                        .append(
-                            $('<span>').addClass('maybelong artist')
-                            .append(
-                                $('<span>').text(artist_string)
-                            )
-                        )
-                    )
-                    .append(
-                        $('<img/>').addClass('cover_vsmall').attr('src', track['image'])
-                    )
-                );
-            });
-            $('#waitContainer').hide()
-        });
+        $.getJSON('loadplaylist/'+playlist_uri, load_playlist);
     });
 });
