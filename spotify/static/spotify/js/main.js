@@ -1,5 +1,5 @@
 function test(event) {
-    alert('weg');
+    event.currentTarget.closest('li').remove();
     event.stopPropagation();
     return true;
 }
