@@ -6,11 +6,24 @@ from django.conf.urls.static import static
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import yaml
+from os import environ
 import json
 
 # Create your views here.
-with open('settings/spotify.settings', 'r') as file:
-    spotify_config = yaml.safe_load(file)['spotify']
+try:
+    try:
+        with open('settings/spotify.settings', 'r') as file:
+            spotify_config = yaml.safe_load(file)['spotify']
+    except:
+        spotify_config = {}
+        spotify_config['client_id'] = environ['CLIENT_ID']
+        spotify_config['client_secret'] = environ['CLIENT_SECRET']
+        spotify_config['redirect'] = environ['OAUTH_REDIRECT']
+except:
+    print('No CLIENT_ID or CLIENT_SECRET. Aborting')
+    exit()
+
+spotify_config['scope'] = "playlist-modify-public, user-read-playback-state, user-read-currently-playing, playlist-read-private, playlist-modify-private"
 
 def getSpotify(request, code=None):
     cache_handler = spotipy.cache_handler.DjangoSessionCacheHandler(request)
