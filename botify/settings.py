@@ -24,9 +24,9 @@ try:
     try:
         with open('settings/secret.key') as f:
             SECRET_KEY = f.read().strip()
-    except:
+    except FileNotFoundError:
         SECRET_KEY = os.environ['SECRET_KEY']
-except:
+except KeyError:
     print('No SECRET_KEY. Aborting')
     exit(-1)
 

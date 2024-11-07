@@ -14,39 +14,41 @@ try:
     try:
         with open('settings/spotify.settings', 'r') as file:
             spotify_config = yaml.safe_load(file)['spotify']
-    except:
+    except FileNotFoundError:
         spotify_config = {}
         spotify_config['client_id'] = environ['CLIENT_ID']
         spotify_config['client_secret'] = environ['CLIENT_SECRET']
         spotify_config['redirect'] = environ['OAUTH_REDIRECT']
-except:
+except KeyError:
     print('No CLIENT_ID or CLIENT_SECRET. Aborting')
     exit()
 
 spotify_config['scope'] = "playlist-modify-public, user-read-playback-state, user-read-currently-playing, playlist-read-private, playlist-modify-private"
 
+
 def getSpotify(request, code=None):
     cache_handler = spotipy.cache_handler.DjangoSessionCacheHandler(request)
-    auth_manager = SpotifyOAuth(scope=spotify_config['scope'], 
-                        client_id=spotify_config['client_id'],
-                        client_secret=spotify_config['client_secret'],
-                        redirect_uri=spotify_config['redirect'],
-                        cache_handler=cache_handler,
-                        show_dialog=True)
+    auth_manager = SpotifyOAuth(scope=spotify_config['scope'],
+                                client_id=spotify_config['client_id'],
+                                client_secret=spotify_config['client_secret'],
+                                redirect_uri=spotify_config['redirect'],
+                                cache_handler=cache_handler,
+                                show_dialog=True)
     if code is not None:
         auth_manager.get_access_token(code)
     token = cache_handler.get_cached_token()
     if token is None:
-        t = auth_manager.get_authorize_url()
-        #return t
+        auth_manager.get_authorize_url()
     sp = spotipy.Spotify(auth_manager=auth_manager)
     return sp
+
 
 def get_default_context():
     context = {}
     context['app'] = 'spotify'
     context['css'] = 'spotify/css/app.css'
     return context
+
 
 def get_smallest_image_url(images):
     picked_image = 'static/spotify/img/musicnote.png'
@@ -58,6 +60,7 @@ def get_smallest_image_url(images):
             height == image['height']
             picked_image = image['url']
     return picked_image
+
 
 def get_playback_info(sp):
     cp = sp.current_playback()
@@ -78,19 +81,20 @@ def get_playback_info(sp):
         playback_info['image'] = get_smallest_image_url(cp['item']['album']['images'])
         playback_info['status'] = 'Playing on '
     return playback_info
+
+
 class SpotifyIndex(TemplateView):
     template_name = "spotify/index.html"
-    
+
     def get_context_data(self, **kwargs):
         return get_default_context()
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         print('index')
-        sp=getSpotify(request)
+        sp = getSpotify(request)
         if sp.auth_manager.cache_handler.get_cached_token() is None:
             return redirect(sp.auth_manager.get_authorize_url())
-        
         user = sp.me()
         context['username'] = user['display_name']
         context['userlink'] = user['external_urls']
@@ -108,32 +112,33 @@ class SpotifyIndex(TemplateView):
         context['playlists'] = playlists
         return self.render_to_response(context)
 
+
 class SpotifyCallback(View):
     def get(self, request, *args, **kwargs):
         code = request.GET.get('code')
         print(code)
-        sp=getSpotify(request, code)
+        sp = getSpotify(request, code)
         user = sp.me()
         print(user)
         return redirect(reverse('spotify:index'))
-    
 
 
 def current(request):
     print('current')
-    sp=getSpotify(request)
+    sp = getSpotify(request)
     if sp.auth_manager.cache_handler.get_cached_token() is None:
         return redirect(sp.auth_manager.get_authorize_url())
     playback_info = get_playback_info(sp)
-    return HttpResponse(json.dumps(playback_info),content_type='application/json')
+    return HttpResponse(json.dumps(playback_info), content_type='application/json')
+
 
 def load_playlist(request, uri):
     print('load_playlist')
-    sp=getSpotify(request)
+    sp = getSpotify(request)
     if sp.auth_manager.cache_handler.get_cached_token() is None:
         return redirect(sp.auth_manager.get_authorize_url())
     print(uri)
-    data = { 'playlist': {}, 'tracks': []}
+    data = {'playlist': {}, 'tracks': []}
     playlist = sp.playlist(uri, 'id, images, name, owner, uri, description, tracks(total)')
     data['playlist']['name'] = playlist['name']
     data['playlist']['description'] = playlist['description']
@@ -144,7 +149,7 @@ def load_playlist(request, uri):
     offset = 0
     tracks = []
     while offset < data['playlist']['trackcount']:
-        tracklist = sp.playlist_tracks(uri,'items(track(name,artists(name),uri,album(name,images)', limit=limit, offset=offset)
+        tracklist = sp.playlist_tracks(uri, 'items(track(name,artists(name),uri,album(name,images)', limit=limit, offset=offset)
         for t in tracklist['items']:
             track = {}
             t = t['track']
@@ -156,15 +161,17 @@ def load_playlist(request, uri):
             tracks.append(track)
         offset += limit
     data['tracks'] = tracks
-    return HttpResponse(json.dumps(data),content_type='application/json')
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
 
 def delete_playlist(request, uri):
-    data = { 'status': 'OK' }
+    data = {'status': 'OK'}
     print(uri)
-    return HttpResponse(json.dumps(data),content_type='application/json')
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
 
 def delete_track_from_playlist(request, playlist, track):
-    data = { 'status': 'OK' }
+    data = {'status': 'OK'}
     print(playlist)
     print(track)
-    return HttpResponse(json.dumps(data),content_type='application/json')
+    return HttpResponse(json.dumps(data), content_type='application/json')
