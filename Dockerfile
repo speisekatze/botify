@@ -44,6 +44,7 @@ RUN addgroup --system app && adduser --system --group app
 ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
 RUN mkdir $APP_HOME
+RUN mkdir $APP_HOME/database
 WORKDIR $APP_HOME
 
 # install dependencies
@@ -66,4 +67,5 @@ RUN chown -R app:app $APP_HOME
 USER app
 
 # run entrypoint.prod.sh
+
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
