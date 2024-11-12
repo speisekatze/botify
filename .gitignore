@@ -1,1 +1,6 @@
 .docker/.env
+.venv/
+settings/spotify.settings
+settings/secret.key
+db.sqlite3
+__pycache__/
