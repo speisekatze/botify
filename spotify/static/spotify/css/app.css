@@ -95,10 +95,48 @@ img.spotify_logo {
     /*border-radius: 6px;
     border: 1px solid var(--background-base);*/
 }
+.div13 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 1;
+    grid-row-start: 3;
+    background: linear-gradient(180deg, var(--background-press) -100%, var(--background-base) 100%);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: calc(calc(100vh - 24px - 60px - 66px - 6px) / 3);
+}
+.div14 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 1;
+    grid-row-start: 4;
+    background: linear-gradient(180deg, var(--background-base) 0%, var(--background-highlight) 100%);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: calc(calc(100vh - 24px - 60px - 66px - 6px) / 3);
+}
 .div3 {
     grid-column: span 2 / span 2;
-    grid-row: span 3 / span 3;
+    grid-row: span 3 / span 1;
     grid-row-start: 2;
+    background: linear-gradient(180deg, var(--background-press) 0%, var(--background-base) 200%);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(calc(100vh - 24px - 60px - 66px - 6px) / 3);
+    z-index: 5;
+}
+.div3::-webkit-scrollbar {
+    width: 8px;
+    position:relative;
+    z-index: 5;
+}
+.div3::-webkit-scrollbar-thumb {
+    background: var(--background-elevated-highlight);
+    border-radius: 6px;
+    border: 1px solid var(--background-base);
+    position:relative;
+    z-index: 5;
+}
+.div3::-webkit-scrollbar-track {
+    background-color: transparent;
 }
 
 .div4 {
@@ -366,6 +404,7 @@ span.wrapper {
     right: 4px;
     top: 14px;
   }
+
   .icon_left {
     height: 18px;
     width: 18px;
@@ -374,3 +413,69 @@ span.wrapper {
     position: relative;
     left: -4px
   }
+
+.div3 .suche {
+    height: 50px;
+    z-index: 10;
+    position: relative;
+}
+
+.div3 .suche div {
+    height: 38px;
+    background-color: var(--background-elevated-highlight);
+    border-radius: 50px;
+    border: 1px solid white;
+    margin-left: 25px;
+    margin-right: 25px;
+    top: 8px;
+    position: relative;
+}
+.div3 .suche input {
+    height: 35px;
+    background-color: var(--background-elevated-highlight);
+    border: 0px;
+    margin: 0px 5px 0px 5px;
+    padding: 0px;
+    caret-color: white;
+    color: white;
+    width: 80%;
+}
+.div3 .suche img {
+    height: 38px;
+    margin: 0px 5px 0px 25px;
+}
+
+.section_headline {
+    width: 100%;
+    margin-left: 13px;
+    margin-right: 13px;
+    margin-top: 3px;
+    display: none;
+}
+
+.artists {
+    margin-left: 23px;
+    margin-top: 8px;
+}
+.artists .artist {
+    display:inline-block;
+    margin-top: 3px;
+    margin-right: 13px;
+    min-width: 150px;
+    background-color: var(--background-elevated-highlight);
+    border-radius: 50px;
+    padding-right: 23px;
+    z-index: 10;
+}
+
+
+.artists .artist span {
+    margin-left: 13px;
+}
+
+.artists .artist img {
+    width: 64px;
+    height: 64px;
+    display: inline;
+    vertical-align: middle;
+}

@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block script %}
+<script>
+    var csrf_token = '{{ csrf_token }}';
+</script>
 <script src="{% static "spotify/js/main.js" %}"></script>
 
 {% endblock script %}
@@ -16,15 +19,33 @@
         <span class="head_user">Hallo, {{ username }}</span>
     </div>
     <div class="div2">
+        <span class="section_headline">Playlists</span>
         <ol class="playlists">
             {% for pl in playlists %}
             <li id="{{ pl.uri }}"><img class="cover_small" src="{{ pl.image }}" alt="albumcover" width="48px" height="48px"/><span class="pl_name">{{ pl.name }}</span><img class="icon_right delete" src="{% static "spotify/img/trash.svg" %}" id="delete_playlist" uri="{{ pl.uri }}" /></li>
             {% endfor %}
         </ol>
     </div>
-    <div class="div3">3</div>
+    <div class="div3">
+        <div class="suche">
+            <div>
+                <img class="icon_left" src="{% static "spotify/img/search.svg" %}" />
+                <input id="artist_lookup" type="text" value="" placeholder="Lookup Artist"/>
+            </div>
+        </div>
+        <div class="artists" id="lookup_artist_list">
+
+        </div>
+    </div>
+    <div class="div13">
+        <div class="artists" id="playlist_artist">
+
+        </div>
+    </div>
+    <div class="div14"></div>
     <div class="div4">4</div>
     <div class="div5">
+        <span class="section_headline">Playlist Tracks</span>
         <div id="playlist_info" class="playlist_info">
             <img src="/static/spotify/img/musicnote.png" class="cover_vsmall" id="playlist_img" />
             <span class="wrapper">

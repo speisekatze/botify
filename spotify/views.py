@@ -175,3 +175,23 @@ def delete_track_from_playlist(request, playlist, track):
     print(playlist)
     print(track)
     return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def artist_lookup(request):
+    data = {'status': 'OK'}
+    q = 'artist:' + request.POST.get('artist', '')
+    sp = getSpotify(request)
+    if sp.auth_manager.cache_handler.get_cached_token() is None:
+        return redirect(sp.auth_manager.get_authorize_url())
+    result = sp.search(q, limit=10, offset=0, type="artist")
+    artists = []
+    for artist in result['artists']['items']:
+        a = {
+            'name': artist['name'],
+            'image': get_smallest_image_url(artist['images']),
+            'uri': artist['uri'],
+            'genres': ','.join([x for x in artist['genres']])
+        }
+        artists.append(a)
+    data['artists'] = artists
+    return HttpResponse(json.dumps(data), content_type='application/json')

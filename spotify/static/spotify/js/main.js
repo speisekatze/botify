@@ -54,6 +54,40 @@ function load_playlist(data, status) {
     });
     $('#waitContainer').hide();
 }
+function add_to_playlist_artists(event) {
+    artist_uri = event.currentTarget.closest('div').id;
+    artist_img = $(event.currentTarget).children('img').attr('src');
+    artist_name = $(event.currentTarget).children('span').text();
+    console.info(artist_img, artist_name);
+    $('div#playlist_artist')
+    .append(
+        $('<div>').addClass('artist').attr('id', artist_uri).on('click', add_to_playlist_artists)
+        .append(
+            $('<img/>').attr('src', artist_img).attr('alt','Artist')
+        )
+        .append(
+            $('<span>').text(artist_name)
+        )
+    );
+    
+}
+function lookup_artist_callback(result) {
+    artists = result['artists'];
+    $('div#lookup_artist_list').empty();
+    artists.forEach( artist => {
+        $('div#lookup_artist_list')
+        .append(
+            $('<div>').addClass('artist').attr('id', artist['uri']).on('click', add_to_playlist_artists)
+            .append(
+                $('<img/>').attr('src', artist['image']).attr('alt','Artist')
+            )
+            .append(
+                $('<span>').text(artist['name'])
+            )
+        )
+    });
+    $('#waitContainer').hide();
+}
 
 $( document ).ready(function() {
     setInterval(function() {
@@ -83,5 +117,15 @@ $( document ).ready(function() {
         $('#waitContainer').show();
         playlist_uri = event.currentTarget.id;
         $.getJSON('loadplaylist/'+playlist_uri, load_playlist);
+    });
+    $('input#artist_lookup').keypress(function(event) {
+        if (event.which == 13) {
+            $('#waitContainer').show();
+            $.post('artist_lookup/', { artist: $('input#artist_lookup').val(), 
+                                       csrfmiddlewaretoken: csrf_token
+                                     }, 
+                                     lookup_artist_callback);
+            return false;
+        }
     });
 });
