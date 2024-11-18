@@ -102,7 +102,12 @@ img.spotify_logo {
     background: linear-gradient(180deg, var(--background-press) -100%, var(--background-base) 100%);
     overflow-y: hidden;
     overflow-x: hidden;
-    height: calc(calc(100vh - 24px - 60px - 66px - 6px) / 3);
+    height: calc(calc(calc(100vh - 24px - 60px - 66px - 6px) / 3) - 10px);
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-image: linear-gradient(90deg, var(--background-press) 0%, var(--background-highlight) 100%) 1;
 }
 .div14 {
     grid-column: span 2 / span 2;
@@ -450,7 +455,7 @@ span.wrapper {
     margin-left: 13px;
     margin-right: 13px;
     margin-top: 3px;
-    display: none;
+    color: var(--text-subdued);
 }
 
 .artists {

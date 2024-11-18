@@ -56,6 +56,14 @@ function load_playlist(data, status) {
 }
 function add_to_playlist_artists(event) {
     artist_uri = event.currentTarget.closest('div').id;
+
+    artist_list = $('#playlist_artist').children('div');
+    for(var i = 0; i < artist_list.length; i++) {
+        if (artist_list[i].id == artist_uri) {
+            return false;
+        }
+    }
+
     artist_img = $(event.currentTarget).children('img').attr('src');
     artist_name = $(event.currentTarget).children('span').text();
     console.info(artist_img, artist_name);
