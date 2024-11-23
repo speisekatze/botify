@@ -6,7 +6,7 @@ img.spotify_logo {
 .parent {
     display: grid;
     grid-template-columns: 320px 350px repeat(3, 1fr) 300px 320px;
-    grid-template-rows: 60px repeat(3, 1fr) 6px 66px 20px;
+    grid-template-rows: 60px 233px repeat(2, 1fr) 6px 66px 20px;
     gap: 0px;
     top: 0px;
     left: 0px;
@@ -102,7 +102,7 @@ img.spotify_logo {
     background: linear-gradient(180deg, var(--background-press) -100%, var(--background-base) 100%);
     overflow-y: hidden;
     overflow-x: hidden;
-    height: calc(calc(calc(100vh - 24px - 60px - 66px - 6px) / 3) - 10px);
+    height: calc(calc(calc(100vh - 24px - 60px - 66px - 6px - 233px) / 2) - 10px);
     border-top-width: 5px;
     border-bottom-width: 5px;
     border-top-style: solid;
@@ -116,7 +116,7 @@ img.spotify_logo {
     background: linear-gradient(180deg, var(--background-base) 0%, var(--background-highlight) 100%);
     overflow-y: hidden;
     overflow-x: hidden;
-    height: calc(calc(100vh - 24px - 60px - 66px - 6px) / 3);
+    height: calc(calc(100vh - 24px - 60px - 66px - 6px - 233px) / 2);
 }
 .div3 {
     grid-column: span 2 / span 2;
@@ -125,7 +125,7 @@ img.spotify_logo {
     background: linear-gradient(180deg, var(--background-press) 0%, var(--background-base) 200%);
     overflow-y: scroll;
     overflow-x: hidden;
-    height: calc(calc(100vh - 24px - 60px - 66px - 6px) / 3);
+    height: 233px;
     z-index: 5;
 }
 .div3::-webkit-scrollbar {
@@ -450,12 +450,37 @@ span.wrapper {
     margin: 0px 5px 0px 25px;
 }
 
-.section_headline {
+div.section_head {
     width: 100%;
-    margin-left: 13px;
+    height: 25px;
+    z-index: 10;
+    position: relative;
+}
+.section_headline {
+    width: fit-content;
+    margin-left: 23px;
     margin-right: 13px;
-    margin-top: 3px;
+    margin-top: 5px;
+    font-size: medium;
     color: var(--text-subdued);
+    font-weight: 700;
+    float: inline-start;
+}
+
+.section_action {
+    width: fit-content;
+    margin-right: 23px;
+    margin-top: 5px;
+    font-size: medium;
+    color: var(--text-subdued);
+    background-color: var(--background-elevated-highlight);
+    border-radius: 50px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: 100;
+    float: inline-end;
+    z-index: 10;
+    position: relative;
 }
 
 .artists {
@@ -466,11 +491,12 @@ span.wrapper {
     display:inline-block;
     margin-top: 3px;
     margin-right: 13px;
-    min-width: 150px;
+    height: 40px;
     background-color: var(--background-elevated-highlight);
     border-radius: 50px;
-    padding-right: 23px;
+    padding-right: 63px;
     z-index: 10;
+    min-width: calc(50% - 76px);
 }
 
 
@@ -479,8 +505,8 @@ span.wrapper {
 }
 
 .artists .artist img {
-    width: 64px;
-    height: 64px;
+    width: 40px;
+    height: 40px;
     display: inline;
     vertical-align: middle;
 }

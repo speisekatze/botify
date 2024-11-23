@@ -97,6 +97,24 @@ function lookup_artist_callback(result) {
     $('#waitContainer').hide();
 }
 
+function get_artists_callback(result) {
+    artists = result['artists'];
+
+    artists.forEach( artist => {
+        $('div#playlist_artist')
+        .append(
+            $('<div>').addClass('artist').attr('id', artist['uri']).on('click', add_to_playlist_artists)
+            .append(
+                $('<img/>').attr('src', artist['image']).attr('alt','Artist')
+            )
+            .append(
+                $('<span>').text(artist['name'])
+            )
+        )
+    });
+    $('#waitContainer').hide();
+}
+
 $( document ).ready(function() {
     setInterval(function() {
         $.getJSON('current/', function(data, status) {
@@ -134,6 +152,15 @@ $( document ).ready(function() {
                                      }, 
                                      lookup_artist_callback);
             return false;
+        }
+    });
+    $('span#get_playlist_artists').on('click', function(event) {
+        playlist_uri = $('input#current_playlist_uri').val();
+        if (playlist_uri == '') {
+            $('#messagebox').show();
+        } else {
+            $('#waitContainer').show();
+            $.getJSON('playlistartists/'+playlist_uri, get_artists_callback);
         }
     });
 });

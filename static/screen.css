@@ -126,14 +126,14 @@ textarea:focus, input:focus{
 	animation: l1 4s infinite;
 	transform: rotate(0deg);
 }
-.waitContainer  {
+.waitContainer, #messagebox  {
 	display: none;
 	z-index: 100;
 	position: absolute;
 	top: 0px;
 	left: 0px;
 }
-.waitContainer::before {
+.waitContainer::before, #messagebox::before {
 	z-index: 100;
 	content: "";
     overflow: hidden;
@@ -143,7 +143,7 @@ textarea:focus, input:focus{
 	background-color: #191919;
 	opacity: 90%;
 }
-.waitContainer::after {
+.waitContainer::after, #messagebox::after {
 	content: "";
 	z-index: 101;
 	background-image: url('spotify/img/noise.svg');

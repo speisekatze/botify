@@ -19,6 +19,11 @@
   </head>
   <body>
     <div id="waitContainer" class="waitContainer" ><div class="loader"></div></div>
+    <div id="messagebox" class="messagebox">
+      <img id="messagebox_icon" src="" alt="icon" />
+      <span id="messagebox_title"></span>
+      <div id="messagebox_text"></div>
+    </div>
     {% block content %}
     <p>Placeholder text in base template. Replace with page content.</p>
     {% endblock content %}

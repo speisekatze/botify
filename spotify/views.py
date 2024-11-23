@@ -132,6 +132,33 @@ def current(request):
     return HttpResponse(json.dumps(playback_info), content_type='application/json')
 
 
+def get_playlist_tacks(sp, playlist, fields):
+    limit = 100
+    offset = 0
+    total = 500
+    tracks = []
+    while offset < total:
+        tracklist = sp.playlist_tracks(playlist, 'total,' + fields , limit=limit, offset=offset)
+        total = tracklist['total']
+        for t in tracklist['items']:
+            track = {}
+            if 'track' in t:
+                t = t['track']
+            if 'album' in t:
+                if 'name' in t['album']:
+                    track['album'] = t['album']['name']
+                if 'images' in t['album']:
+                    track['image'] = get_smallest_image_url(t['album']['images'])
+            if 'name' in t:
+                track['name'] = t['name']
+            if 'artists' in t:
+                track['artists'] = t['artists']
+            if 'uri' in t:
+                track['uri'] = t['uri']
+            tracks.append(track)
+        offset += limit
+    return tracks
+
 def load_playlist(request, uri):
     print('load_playlist')
     sp = getSpotify(request)
@@ -145,22 +172,8 @@ def load_playlist(request, uri):
     data['playlist']['image'] = get_smallest_image_url(playlist['images'])
     data['playlist']['trackcount'] = playlist['tracks']['total']
     data['playlist']['uri'] = playlist['uri']
-    limit = 100
-    offset = 0
-    tracks = []
-    while offset < data['playlist']['trackcount']:
-        tracklist = sp.playlist_tracks(uri, 'items(track(name,artists(name),uri,album(name,images)', limit=limit, offset=offset)
-        for t in tracklist['items']:
-            track = {}
-            t = t['track']
-            track['image'] = get_smallest_image_url(t['album']['images'])
-            track['album'] = t['album']['name']
-            track['name'] = t['name']
-            track['artists'] = t['artists']
-            track['uri'] = t['uri']
-            tracks.append(track)
-        offset += limit
-    data['tracks'] = tracks
+    
+    data['tracks'] = get_playlist_tacks(sp, uri, 'items(track(name,artists(name),uri,album(name,images)')
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
@@ -193,5 +206,25 @@ def artist_lookup(request):
             'genres': ','.join([x for x in artist['genres']])
         }
         artists.append(a)
+    data['artists'] = artists
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def get_artists_from_playlist(request, uri):
+    data = {'status': 'OK'}
+    sp = getSpotify(request)
+    if sp.auth_manager.cache_handler.get_cached_token() is None:
+        return redirect(sp.auth_manager.get_authorize_url())
+    tracks = get_playlist_tacks(sp, uri, 'items(track(artists(uri)')
+    uris = set([y['uri'] for x in tracks for y in x['artists']])
+    sp_artists = sp.artists(uris)
+    artists = []
+    for sp_artist in sp_artists['artists']:
+        artist = {}
+        artist['name'] = sp_artist['name']
+        artist['image'] = get_smallest_image_url(sp_artist['images'])
+        artist['uri'] = sp_artist['uri']
+        artist['genres'] = ', '.join(sp_artist['genres'])
+        artists.append(artist)
     data['artists'] = artists
     return HttpResponse(json.dumps(data), content_type='application/json')

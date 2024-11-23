@@ -12,4 +12,5 @@ urlpatterns = [
     path('delete_playlist/<str:uri>', views.delete_playlist, name="deletepl"),
     path('delete_track_from_playlist/<str:playlist>/<str:track>', views.delete_track_from_playlist, name="deletetfpl"),
     path('artist_lookup/', views.artist_lookup, name="artist_lookup"),
+    path('playlistartists/<str:uri>', views.get_artists_from_playlist, name="playlistartists"),
 ]
