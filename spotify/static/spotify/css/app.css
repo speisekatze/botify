@@ -100,7 +100,7 @@ img.spotify_logo {
     grid-row: span 3 / span 1;
     grid-row-start: 3;
     background: linear-gradient(180deg, var(--background-press) -100%, var(--background-base) 100%);
-    overflow-y: hidden;
+    overflow-y: scroll;
     overflow-x: hidden;
     height: calc(calc(calc(100vh - 24px - 60px - 66px - 6px - 233px) / 2) - 10px);
     border-top-width: 5px;
@@ -108,6 +108,21 @@ img.spotify_logo {
     border-top-style: solid;
     border-bottom-style: solid;
     border-image: linear-gradient(90deg, var(--background-press) 0%, var(--background-highlight) 100%) 1;
+}
+.div13::-webkit-scrollbar {
+    width: 8px;
+    position:relative;
+    z-index: 5;
+}
+.div13::-webkit-scrollbar-thumb {
+    background: var(--background-elevated-highlight);
+    border-radius: 6px;
+    border: 1px solid var(--background-base);
+    position:relative;
+    z-index: 5;
+}
+.div13::-webkit-scrollbar-track {
+    background-color: transparent;
 }
 .div14 {
     grid-column: span 2 / span 2;
@@ -408,16 +423,16 @@ span.wrapper {
     position: absolute;
     right: 4px;
     top: 14px;
-  }
+}
 
-  .icon_left {
+.icon_left {
     height: 18px;
     width: 18px;
     display: inline;
     vertical-align: middle;
     position: relative;
     left: -4px
-  }
+}
 
 .div3 .suche {
     height: 50px;
@@ -497,6 +512,7 @@ div.section_head {
     padding-right: 63px;
     z-index: 10;
     min-width: calc(50% - 76px);
+    position: relative;
 }
 
 
@@ -504,9 +520,14 @@ div.section_head {
     margin-left: 13px;
 }
 
-.artists .artist img {
+.artists .artist img:not(.icon_right) {
     width: 40px;
     height: 40px;
     display: inline;
     vertical-align: middle;
+}
+
+.artists .artist img.icon_right {
+    top: 10px;
+    right: 8px;
 }

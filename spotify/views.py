@@ -138,7 +138,7 @@ def get_playlist_tacks(sp, playlist, fields):
     total = 500
     tracks = []
     while offset < total:
-        tracklist = sp.playlist_tracks(playlist, 'total,' + fields , limit=limit, offset=offset)
+        tracklist = sp.playlist_tracks(playlist, 'total,' + fields, limit=limit, offset=offset)
         total = tracklist['total']
         for t in tracklist['items']:
             track = {}
@@ -159,6 +159,7 @@ def get_playlist_tacks(sp, playlist, fields):
         offset += limit
     return tracks
 
+
 def load_playlist(request, uri):
     print('load_playlist')
     sp = getSpotify(request)
@@ -172,7 +173,6 @@ def load_playlist(request, uri):
     data['playlist']['image'] = get_smallest_image_url(playlist['images'])
     data['playlist']['trackcount'] = playlist['tracks']['total']
     data['playlist']['uri'] = playlist['uri']
-    
     data['tracks'] = get_playlist_tacks(sp, uri, 'items(track(name,artists(name),uri,album(name,images)')
     return HttpResponse(json.dumps(data), content_type='application/json')
 
@@ -216,7 +216,8 @@ def get_artists_from_playlist(request, uri):
     if sp.auth_manager.cache_handler.get_cached_token() is None:
         return redirect(sp.auth_manager.get_authorize_url())
     tracks = get_playlist_tacks(sp, uri, 'items(track(artists(uri)')
-    uris = set([y['uri'] for x in tracks for y in x['artists']])
+    # uris = set([y['uri'] for x in tracks for y in x['artists']])
+    uris = set([y[0]['uri'] for y in [x['artists'] for x in tracks]])
     sp_artists = sp.artists(uris)
     artists = []
     for sp_artist in sp_artists['artists']:
