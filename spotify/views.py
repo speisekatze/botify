@@ -229,3 +229,23 @@ def get_artists_from_playlist(request, uri):
         artists.append(artist)
     data['artists'] = artists
     return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def get_related_artists(request, uri):
+    data = {'status': 'OK'}
+    sp = getSpotify(request)
+    if sp.auth_manager.cache_handler.get_cached_token() is None:
+        return redirect(sp.auth_manager.get_authorize_url())
+    print(uri)
+    result = sp.artist_related_artists(uri)
+    artists = []
+    for artist in result['artists']:
+        a = {
+            'name': artist['name'],
+            'image': get_smallest_image_url(artist['images']),
+            'uri': artist['uri'],
+            'genres': ','.join([x for x in artist['genres']])
+        }
+        artists.append(a)
+    data['artists'] = artists
+    return HttpResponse(json.dumps(data), content_type='application/json')

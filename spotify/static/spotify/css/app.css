@@ -1,3 +1,7 @@
+img {
+    border-radius: 4px;
+}
+
 img.spotify_logo {
     height: 40px;
     margin: calc(40px* 0.4);
@@ -77,24 +81,6 @@ img.spotify_logo {
     background: linear-gradient(180deg, var(--background-press) 0%, var(--background-base) 66%, var(--background-highlight) 100%);
     border-radius: 10px;
 }
-.div2::-webkit-scrollbar {
-    width: 8px;
-    position:relative;
-    z-index: 5;
-}
-.div2::-webkit-scrollbar-thumb {
-    background: var(--background-elevated-highlight);
-    border-radius: 6px;
-    border: 1px solid var(--background-base);
-    position:relative;
-    z-index: 5;
-}
-.div2::-webkit-scrollbar-track {
-    /*background: var(--background-base);*/
-    background-color: transparent;
-    /*border-radius: 6px;
-    border: 1px solid var(--background-base);*/
-}
 .div13 {
     grid-column: span 2 / span 2;
     grid-row: span 3 / span 1;
@@ -109,29 +95,29 @@ img.spotify_logo {
     border-bottom-style: solid;
     border-image: linear-gradient(90deg, var(--background-press) 0%, var(--background-highlight) 100%) 1;
 }
-.div13::-webkit-scrollbar {
+.div14 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 1;
+    grid-row-start: 4;
+    background: linear-gradient(180deg, var(--background-base) 0%, var(--background-highlight) 100%);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(calc(100vh - 24px - 60px - 66px - 6px - 233px) / 2);
+}
+.div14::-webkit-scrollbar, .div13::-webkit-scrollbar, .div3::-webkit-scrollbar, .div2::-webkit-scrollbar {
     width: 8px;
     position:relative;
     z-index: 5;
 }
-.div13::-webkit-scrollbar-thumb {
+.div14::-webkit-scrollbar-thumb, .div13::-webkit-scrollbar-thumb, .div3::-webkit-scrollbar-thumb, .div2::-webkit-scrollbar-thumb {
     background: var(--background-elevated-highlight);
     border-radius: 6px;
     border: 1px solid var(--background-base);
     position:relative;
     z-index: 5;
 }
-.div13::-webkit-scrollbar-track {
+.div14::-webkit-scrollbar-track, .div3::-webkit-scrollbar-track, .div3::-webkit-scrollbar-track, .div2::-webkit-scrollbar-track {
     background-color: transparent;
-}
-.div14 {
-    grid-column: span 2 / span 2;
-    grid-row: span 3 / span 1;
-    grid-row-start: 4;
-    background: linear-gradient(180deg, var(--background-base) 0%, var(--background-highlight) 100%);
-    overflow-y: hidden;
-    overflow-x: hidden;
-    height: calc(calc(100vh - 24px - 60px - 66px - 6px - 233px) / 2);
 }
 .div3 {
     grid-column: span 2 / span 2;
@@ -142,21 +128,6 @@ img.spotify_logo {
     overflow-x: hidden;
     height: 233px;
     z-index: 5;
-}
-.div3::-webkit-scrollbar {
-    width: 8px;
-    position:relative;
-    z-index: 5;
-}
-.div3::-webkit-scrollbar-thumb {
-    background: var(--background-elevated-highlight);
-    border-radius: 6px;
-    border: 1px solid var(--background-base);
-    position:relative;
-    z-index: 5;
-}
-.div3::-webkit-scrollbar-track {
-    background-color: transparent;
 }
 
 .div4 {
@@ -531,7 +502,11 @@ div.section_head {
     vertical-align: middle;
 }
 
-.artists .artist img.icon_right {
+.artists .artist img.delete {
     top: 10px;
     right: 8px;
+}
+.artists .artist img.link {
+    top: 10px;
+    right: 28px;
 }

@@ -59,6 +59,29 @@ function delete_artist_from_playlist(event) {
     $(event.currentTarget).parent().remove();
 }
 
+function find_related_artists(event) {
+    uri = event.currentTarget.getAttribute('uri');
+    $('#waitContainer').show();
+    $.getJSON('relatedartists/'+uri, function(data, status) {
+        artists = data['artists'];
+        $('div#related_artist').empty();
+        artists.forEach( artist => {
+            $('div#related_artist')
+            .append(
+                $('<div>').addClass('artist').attr('id', artist['uri']).on('click', add_to_playlist_artists)
+                .append(
+                    $('<img/>').attr('src', artist['image']).attr('alt','Artist')
+                )
+                .append(
+                    $('<span>').text(artist['name'])
+                )
+            );
+        });
+        $('#waitContainer').hide();
+    });
+    
+}
+
 function add_artist(artist_uri, artist_img, artist_name) {
     artist_list = $('#playlist_artist').children('div');
     for(var i = 0; i < artist_list.length; i++) {
@@ -75,6 +98,9 @@ function add_artist(artist_uri, artist_img, artist_name) {
         )
         .append(
             $('<span>').text(artist_name)
+        )
+        .append(
+            $('<img/>').addClass('icon_right link').attr('src', 'static/spotify/img/link.svg').attr('id', 'related_artists').attr('uri', artist_uri).on('click', find_related_artists)
         )
         .append(
             $('<img/>').addClass('icon_right delete').attr('src', 'static/spotify/img/trash.svg').attr('id', 'delete_track_from_pl').attr('uri', artist_uri).on('click', delete_artist_from_playlist)
@@ -103,7 +129,7 @@ function lookup_artist_callback(result) {
             .append(
                 $('<span>').text(artist['name'])
             )
-        )
+        );
     });
     $('#waitContainer').hide();
 }
@@ -166,5 +192,8 @@ $( document ).ready(function() {
     });
     $('span#clear_playlist_artists').on('click', function(event) {
         $('div#playlist_artist').empty();
+    });
+    $('span#clear_related_artists').on('click', function(event) {
+        $('div#related_artist').empty();
     });
 });
