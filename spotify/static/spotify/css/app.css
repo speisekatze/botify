@@ -436,8 +436,10 @@ span.wrapper {
 
 .div3 .suche {
     height: 50px;
-    z-index: 10;
-    position: relative;
+    z-index: 100;
+    position: sticky;
+    top: 0px;
+    background-color: var(--background-press);
 }
 
 .div3 .suche div {
@@ -467,9 +469,11 @@ span.wrapper {
 
 div.section_head {
     width: 100%;
-    height: 25px;
-    z-index: 10;
-    position: relative;
+    height: 30px;
+    z-index: 100;
+    position: sticky;
+    top: 0px;
+    background-color: var(--background-press);
 }
 .section_headline {
     width: fit-content;
