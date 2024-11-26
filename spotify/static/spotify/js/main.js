@@ -184,6 +184,9 @@ $( document ).ready(function() {
     $('span#get_playlist_artists').on('click', function(event) {
         playlist_uri = $('input#current_playlist_uri').val();
         if (playlist_uri == '') {
+            $('#messagebox_icon').attr('src', 'static/spotify/img/info.svg');
+            $('#messagebox_title').text('No Playlist');
+            $('#messagebox_text').text('You need to load an existing playlist from the left column.');
             $('#messagebox').show();
         } else {
             $('#waitContainer').show();

@@ -20,9 +20,13 @@
   <body>
     <div id="waitContainer" class="waitContainer" ><div class="loader"></div></div>
     <div id="messagebox" class="messagebox">
-      <img id="messagebox_icon" src="" alt="icon" />
-      <span id="messagebox_title"></span>
-      <div id="messagebox_text"></div>
+      <div class="messagebox_container">
+        <img class="messagebox_icon" id="messagebox_icon" src="" alt="icon" />
+        <span class="messagebox_tcontainer">
+          <span class="messagebox_title" id="messagebox_title"></span>
+          <span class="messagebox_text" id="messagebox_text"></span>
+        </span>
+      </div>
     </div>
     {% block content %}
     <p>Placeholder text in base template. Replace with page content.</p>

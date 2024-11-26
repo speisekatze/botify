@@ -142,10 +142,11 @@ textarea:focus, input:focus{
 	height: 100vh;
 	background-color: #191919;
 	opacity: 90%;
+	top: 0px;
+	left: 0px;
 }
 .waitContainer::after, #messagebox::after {
 	content: "";
-	z-index: 101;
 	background-image: url('spotify/img/noise.svg');
 	height: 100vh;
 	width: 100vw;
@@ -155,10 +156,46 @@ textarea:focus, input:focus{
 	mix-blend-mode: screen;
 	opacity: 25%;
 	transform: translateZ(10px);
+	top: 0px;
+	left: 0px;
 }
 @keyframes l1 {
 	0%   {-webkit-mask-size:var(--s), auto; -webkit-mask-position-x: 4px}
 	56%  {-webkit-mask-size:var(--s), auto; -webkit-mask-position-x: 400px}
 	60%  {transform: rotate(0deg); -webkit-mask-size:var(--s),auto; -webkit-mask-position-x: 400px}
 	100% {transform: rotate(-180deg); -webkit-mask-size:var(--s),auto; -webkit-mask-position-x: 400px}
+}
+
+div.messagebox_container {
+	top: calc(calc(100vh / 2) - 100px);
+	left: calc(calc(100vw / 2) - 150px);
+	position: absolute;
+	z-index: 100;
+	width: 300px;
+}
+
+.messagebox_icon {
+	width: 100px;
+	height: 100px;
+	vertical-align: middle;
+	position: relative;
+}
+
+.messagebox_tcontainer {
+	display: inline-block;
+	vertical-align: middle;
+	width: 195px;
+
+}
+.messagebox_title {
+	display: inline-block;
+	width: 195px;
+	font-size: xx-large;
+	font-weight: 500;
+	margin-bottom: 8px;
+}
+.messagebox_text {
+	display: inline-block;
+	width: 195px;
+	font-size: larger;
 }
