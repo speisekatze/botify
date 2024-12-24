@@ -9,7 +9,7 @@ img.spotify_logo {
 }
 .parent {
     display: grid;
-    grid-template-columns: 320px 350px repeat(3, 1fr) 300px 320px;
+    grid-template-columns: 320px 350px repeat(4, 1fr) 300px 320px;
     grid-template-rows: 60px 233px repeat(2, 1fr) 6px 66px 20px;
     gap: 0px;
     top: 0px;
@@ -32,7 +32,7 @@ img.spotify_logo {
     opacity: 2%;
 }
 .div7 {
-    grid-column: 2 / span 5;
+    grid-column: 2 / span 6;
     grid-row-start: 6;
     height: 66px;
     background: var(--background-highlight);
@@ -47,13 +47,13 @@ img.spotify_logo {
     z-index: 5;
 }
 .div1 {
-    grid-column: 2 / 7;
+    grid-column: 2 / 8;
     height: 60px;
     background: var(--background-press);
 }
 
 .div8 {
-    grid-column: 7 / 7;
+    grid-column: 8 / 8;
     height: 60px;
     background: var(--background-press);
 }
@@ -68,7 +68,7 @@ img.spotify_logo {
     background: var(--background-highlight);
 }
 .div12 {
-    grid-column: 7 / 7;
+    grid-column: 8 / 8;
     background: var(--background-highlight);
 }
 
@@ -82,7 +82,7 @@ img.spotify_logo {
     border-radius: 10px;
 }
 .div13 {
-    grid-column: span 2 / span 2;
+    grid-column: span 3 / span 3;
     grid-row: span 3 / span 1;
     grid-row-start: 3;
     background: linear-gradient(180deg, var(--background-press) -100%, var(--background-base) 100%);
@@ -96,13 +96,15 @@ img.spotify_logo {
     border-image: linear-gradient(90deg, var(--background-press) 0%, var(--background-highlight) 100%) 1;
 }
 .div14 {
-    grid-column: span 2 / span 2;
+    grid-column: span 3 / span 3;
     grid-row: span 3 / span 1;
     grid-row-start: 4;
     background: linear-gradient(180deg, var(--background-base) 0%, var(--background-highlight) 100%);
     overflow-y: scroll;
     overflow-x: hidden;
     height: calc(calc(100vh - 24px - 60px - 66px - 6px - 233px) / 2);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
 }
 .div14::-webkit-scrollbar, .div13::-webkit-scrollbar, .div3::-webkit-scrollbar, .div2::-webkit-scrollbar {
     width: 8px;
@@ -120,7 +122,7 @@ img.spotify_logo {
     background-color: transparent;
 }
 .div3 {
-    grid-column: span 2 / span 2;
+    grid-column: span 3 / span 3;
     grid-row: span 3 / span 1;
     grid-row-start: 2;
     background: linear-gradient(180deg, var(--background-press) 0%, var(--background-base) 200%);
@@ -132,13 +134,33 @@ img.spotify_logo {
 
 .div4 {
     grid-row: span 3 / span 3;
-    grid-column-start: 4;
+    grid-column: span 3 / span 3;
+    grid-column-start: 5;
     grid-row-start: 2;
+    background: linear-gradient(180deg, var(--background-press) 0%, var(--background-base) 66%, var(--background-highlight) 100%);
+    border-radius: 10px;
+    height: calc(100vh - 24px - 60px - 66px - 6px);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
-
+.div4::-webkit-scrollbar, .div13::-webkit-scrollbar, .div3::-webkit-scrollbar, .div2::-webkit-scrollbar {
+    width: 8px;
+    position:relative;
+    z-index: 5;
+}
+.div4::-webkit-scrollbar-thumb, .div13::-webkit-scrollbar-thumb, .div3::-webkit-scrollbar-thumb, .div2::-webkit-scrollbar-thumb {
+    background: var(--background-elevated-highlight);
+    border-radius: 6px;
+    border: 1px solid var(--background-base);
+    position:relative;
+    z-index: 5;
+}
+.div4::-webkit-scrollbar-track, .div3::-webkit-scrollbar-track, .div3::-webkit-scrollbar-track, .div2::-webkit-scrollbar-track {
+    background-color: transparent;
+}
 .div5 {
     grid-row: span 3 / span 3;
-    grid-column-start: 7;
+    grid-column-start: 8;
     grid-row-start: 2;
     background: linear-gradient(180deg, var(--background-press) 0%, var(--background-base) 66%, var(--background-highlight) 100%);
     border-radius: 10px;
@@ -165,7 +187,7 @@ img.spotify_logo {
 }
 
 .div6 {
-    grid-column: span 7 / span 7;
+    grid-column: span 8 / span 8;
     grid-row-start: 7;
     height: 20px;
     background: linear-gradient(90deg, var(--background-highlight) 350px, var(--background-press) 35%, var(--background-press) 65%, var(--background-highlight) calc(100% - 350px));
@@ -173,7 +195,7 @@ img.spotify_logo {
 }
 
 .div9 {
-    grid-column: span 7 / span 7;
+    grid-column: span 8 / span 8;
     grid-row-start: 5;
     height: 6px;
     background: rgb(0,0,0);
@@ -509,4 +531,80 @@ div.section_head {
 .artists .artist img.link {
     top: 10px;
     right: 28px;
+}
+
+div.pl_playlist_builder {
+    margin-top: 28px;
+    margin-left: 24px;
+    vertical-align: middle;
+}
+
+div.pl_playlist_builder label {
+    margin-right: 24px;
+    width: 100px;
+    display: inline-block;
+    /* margin-top: 4px; */
+    top: 4px;
+    position: relative;
+}
+div.pl_playlist_builder input {
+    margin-right: 14px;
+    accent-color: var(--background-elevated-highlight);
+}
+div.pl_playlist_builder input#pl_max_tracks, input#pl_playlist_name {
+    height: 14px;
+    background-color: var(--background-elevated-highlight);
+    border: 0px;
+    margin: 1px 5px 0px 15px;
+    padding: 0px;
+    caret-color: white;
+    color: white;
+    width: 70%;
+}
+div.pl_playlist_builder div.pl_input {
+    height: 18px;
+    background-color: var(--background-elevated-highlight);
+    border-radius: 50px;
+    border: 1px solid white;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 5px;
+    position: relative;
+    display: inline-block;
+}
+div.pl_playlist_builder div.pl_input2 {
+    height: 18px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 5px;
+    position: relative;
+    display: inline-block;
+}
+
+input[type='radio']:after {
+    width: 13px;
+    height: 13px;
+    border-radius: 13px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--background-elevated-highlight);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 13px;
+    height: 13px;
+    border-radius: 13px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: var(--essential-announcement);
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid white;
 }
