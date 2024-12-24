@@ -494,7 +494,22 @@ div.section_head {
     z-index: 10;
     position: relative;
 }
-
+#get_songs_from_artists {
+    width: fit-content;
+    margin-right: 23px;
+    margin-top: 5px;
+    font-size: medium;
+    color: var(--text-subdued);
+    background-color: var(--background-elevated-highlight);
+    border-radius: 50px;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-weight: 100;
+    float: inline-end;
+    z-index: 10;
+    position: relative;
+    display: block;
+}
 .artists {
     margin-left: 23px;
     margin-top: 8px;
@@ -546,6 +561,7 @@ div.pl_playlist_builder label {
     /* margin-top: 4px; */
     top: 4px;
     position: relative;
+    color: var(--text-subdued);
 }
 div.pl_playlist_builder input {
     margin-right: 14px;
@@ -560,6 +576,7 @@ div.pl_playlist_builder input#pl_max_tracks, input#pl_playlist_name {
     caret-color: white;
     color: white;
     width: 70%;
+    color: var(--text-subdued);
 }
 div.pl_playlist_builder div.pl_input {
     height: 18px;
@@ -571,6 +588,7 @@ div.pl_playlist_builder div.pl_input {
     margin-top: 5px;
     position: relative;
     display: inline-block;
+    color: var(--text-subdued);
 }
 div.pl_playlist_builder div.pl_input2 {
     height: 18px;
@@ -579,6 +597,7 @@ div.pl_playlist_builder div.pl_input2 {
     margin-top: 5px;
     position: relative;
     display: inline-block;
+    color: var(--text-subdued);
 }
 
 input[type='radio']:after {

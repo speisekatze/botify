@@ -59,11 +59,11 @@
         </div>
     </div>
     <div class="div4">
-        <div class="section_head">
-            <span class="section_headline">Selected Songs: </span>
+        <div class="section_head" style="height: 129px;">
+            
             
             <span class="section_action" id="clear_playlist_artists">Clear</span>
-            <br />
+
             <div class="pl_playlist_builder">
                 <label for="max_songs_artist">Songs per Artist</label><div class="pl_input"><input type="number" id="pl_max_tracks" name="max_songs_artist" value="5" /></div><br />
                 <label for="playlist_name">Playlist Name</label><div class="pl_input"><input type="text" id="pl_playlist_name" name="playlist_name" placeholder="Playlist Name" value="" /></div><br />
@@ -72,8 +72,10 @@
                     <label for="playlist_type">Most played</label><input type="radio" id="pl_playlist_type_popular" name="playlist_type" value="popular" />
                     <label for="playlist_type">Least Played</label><input type="radio" id="pl_playlist_type_hipster" name="playlist_type" value="hipster" />
                 </div>
-                <span class="section_action" id="get_playlist_artists">Get Songs from selected Artists</span>
+                <span id="get_songs_from_artists">Get Songs from selected Artists</span>
             </div>
+            <br style="clear: both;"/>
+            <span class="section_headline">Selected Songs: </span>
         </div>
         <div class="artists" id="playlist_artist">
 
