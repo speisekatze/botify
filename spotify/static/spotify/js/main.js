@@ -142,6 +142,11 @@ function get_artists_callback(result) {
     $('#waitContainer').hide();
 }
 
+function get_songs_callback(result) {
+
+    $('#waitContainer').hide();
+}
+
 $( document ).ready(function() {
     setInterval(function() {
         $.getJSON('current/', function(data, status) {
@@ -198,5 +203,21 @@ $( document ).ready(function() {
     });
     $('span#clear_related_artists').on('click', function(event) {
         $('div#related_artist').empty();
+    });
+    $('span#get_songs_from_artists').on('click', function(event) {
+        $('#waitContainer').show();
+        artists = $.map($("div#playlist_artist div.artist"), function(n, i){ return n.id; });
+        
+        type = $('input[name="playlist_type"]:checked').val();
+        if ('hipster' != type && 'popular' != type) {
+            type = 'latest';
+        }
+        $.post('get_songs/', { artists: artists, 
+                                   songs_per_artist: $('input#pl_max_tracks').val(),
+                                   type: type,
+                                   csrfmiddlewaretoken: csrf_token
+                                 }, 
+                                 get_songs_callback);
+        return false;
     });
 });

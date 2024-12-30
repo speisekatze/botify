@@ -279,7 +279,6 @@ span.track > span.song {
 	font-weight: 700;
     font-size: 1.2em;
 	display: block;
-    width: 200px;
     text-wrap: nowrap;
     overflow: hidden;
 }
