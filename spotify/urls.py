@@ -14,4 +14,6 @@ urlpatterns = [
     path('artist_lookup/', views.artist_lookup, name="artist_lookup"),
     path('playlistartists/<str:uri>', views.get_artists_from_playlist, name="playlistartists"),
     path('relatedartists/<str:uri>', views.get_related_artists, name="relatedartists"),
+    path('get_songs/', views.get_songs, name="get_songs"),
+    path('save_playlist/', views.save_playlist, name="save_playlist"),
 ]

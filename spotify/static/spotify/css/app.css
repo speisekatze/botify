@@ -365,6 +365,7 @@ ol.playlist > li {
     border-color: transparent;
     height: 40px;
     width: 277px;
+    display: inline-block;
 }
 ol.playlist span.track {
     vertical-align: middle;

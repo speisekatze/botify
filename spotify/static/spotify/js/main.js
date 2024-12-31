@@ -141,9 +141,47 @@ function get_artists_callback(result) {
     });
     $('#waitContainer').hide();
 }
-
-function get_songs_callback(result) {
-
+function save_callback(data, result) {
+    playlist_uri = data['playlist_id']
+    $.getJSON('loadplaylist/'+playlist_uri, load_playlist);
+    $('#waitContainer').hide();
+}
+function get_songs_callback(data, result) {
+    tracks = data['songs'];
+    $('ol#playlist_songs').empty();
+    tracks.forEach((track) => {
+        let artists = track['artists'];
+        let artist_string = "";
+        artists.forEach((element, key, arr) => {
+            artist_string += element['name'];
+            if (key+1 < arr.length) { artist_string += ", "};
+        });
+        $('ol#playlist_songs')
+        .append(
+            $("<li>").attr('id',track['uri'])
+            .append(
+                $('<img/>').addClass('icon_left delete').attr('src', 'static/spotify/img/trash.svg').attr('id', 'delete_track_from_pl').attr('uri', track['uri']).on('click', delete_from_playlist)
+            )
+            .append(
+                $('<span>').addClass('track')
+                .append(
+                    $('<span>').addClass('maybelong song')
+                    .append(
+                        $('<span>').text(track['name'])
+                    )
+                )
+                .append(
+                    $('<span>').addClass('maybelong artist')
+                    .append(
+                        $('<span>').text(artist_string)
+                    )
+                )
+            )
+            .append(
+                $('<img/>').addClass('cover_vsmall').attr('src', track['image'])
+            )
+        );
+    });
     $('#waitContainer').hide();
 }
 
@@ -164,7 +202,7 @@ $( document ).ready(function() {
         });
     }, 15000);
     $('img#delete_playlist').on('click', function(event) {
-        playlist_uri = event.currentTarget.id;
+        playlist_uri = $(event.currentTarget).attr('uri');
         $.getJSON('delete_playlist/'+playlist_uri, function(data, status) {
             event.currentTarget.closest('li').remove();
         });
@@ -203,6 +241,19 @@ $( document ).ready(function() {
     });
     $('span#clear_related_artists').on('click', function(event) {
         $('div#related_artist').empty();
+    });
+    $('span#clear_playlist_songs').on('click', function(event) {
+        $('ol#playlist_songs').empty();
+    });
+    $('span#save_playlist').on('click', function(event) {
+        $('#waitContainer').show();
+        songs = $.map($("ol#playlist_songs li"), function(n, i){ return n.id; });
+        pl_name = $('input#pl_playlist_name').val();
+        $.post('save_playlist/', { songs: songs, 
+                                   pl_name: pl_name,
+                                   csrfmiddlewaretoken: csrf_token
+                                 }, 
+                                 save_callback);
     });
     $('span#get_songs_from_artists').on('click', function(event) {
         $('#waitContainer').show();

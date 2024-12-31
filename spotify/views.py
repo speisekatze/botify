@@ -132,6 +132,24 @@ def current(request):
     return HttpResponse(json.dumps(playback_info), content_type='application/json')
 
 
+def transform_track(t):
+    track = {}
+    if 'track' in t:
+        t = t['track']
+    if 'album' in t:
+        if 'name' in t['album']:
+            track['album'] = t['album']['name']
+        if 'images' in t['album']:
+            track['image'] = get_smallest_image_url(t['album']['images'])
+    if 'name' in t:
+        track['name'] = t['name']
+    if 'artists' in t:
+        track['artists'] = t['artists']
+    if 'uri' in t:
+        track['uri'] = t['uri']
+    return track
+
+
 def get_playlist_tacks(sp, playlist, fields):
     limit = 100
     offset = 0
@@ -141,21 +159,7 @@ def get_playlist_tacks(sp, playlist, fields):
         tracklist = sp.playlist_tracks(playlist, 'total,' + fields, limit=limit, offset=offset)
         total = tracklist['total']
         for t in tracklist['items']:
-            track = {}
-            if 'track' in t:
-                t = t['track']
-            if 'album' in t:
-                if 'name' in t['album']:
-                    track['album'] = t['album']['name']
-                if 'images' in t['album']:
-                    track['image'] = get_smallest_image_url(t['album']['images'])
-            if 'name' in t:
-                track['name'] = t['name']
-            if 'artists' in t:
-                track['artists'] = t['artists']
-            if 'uri' in t:
-                track['uri'] = t['uri']
-            tracks.append(track)
+            tracks.append(transform_track(t))
         offset += limit
     return tracks
 
@@ -180,6 +184,11 @@ def load_playlist(request, uri):
 def delete_playlist(request, uri):
     data = {'status': 'OK'}
     print(uri)
+    sp = getSpotify(request)
+    if sp.auth_manager.cache_handler.get_cached_token() is None:
+        return redirect(sp.auth_manager.get_authorize_url())
+    user_id = sp.current_user()['id']
+    sp.user_playlist_unfollow(user_id, uri.split(':')[2])
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
@@ -248,4 +257,49 @@ def get_related_artists(request, uri):
         }
         artists.append(a)
     data['artists'] = artists
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def get_songs(request):
+    data = {'status': 'OK'}
+    artists = request.POST.getlist('artists[]', '')
+    typ = request.POST.get('type', '')
+    songs_per_artist = int(request.POST.get('songs_per_artist', '5'))
+    sp = getSpotify(request)
+    if sp.auth_manager.cache_handler.get_cached_token() is None:
+        return redirect(sp.auth_manager.get_authorize_url())
+    songs = []
+    for artist in artists:
+        print(artist)
+        songcount = 0
+        result = sp.artist_albums(artist, album_type="single", limit=songs_per_artist)
+        for album in result['items']:
+            tracks = sp.album_tracks(album['id'], songs_per_artist)
+            for track in tracks['items']:
+                track['album'] = album
+                songs.append(transform_track(track))
+                songcount += 1
+                if songcount >= songs_per_artist:
+                    break
+    data['songs'] = songs
+    return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+def save_playlist(request):
+    data = {'status': 'OK'}
+    songs = request.POST.getlist('songs[]', '')
+    pl_name = request.POST.get('pl_name', '')
+    sp = getSpotify(request)
+    if sp.auth_manager.cache_handler.get_cached_token() is None:
+        return redirect(sp.auth_manager.get_authorize_url())
+    user_id = sp.current_user()['id']
+    playlist = sp.user_playlist_create(user_id, pl_name, False, False)
+    x = len(songs) // 50
+    end = 0
+    for i in range(0, x):
+        start = 0 + (i * 50)
+        end = 50 + (i * 50) - 1
+        sp.playlist_add_items(playlist['id'], songs[start:end])
+    sp.playlist_add_items(playlist['id'], songs[end + 1:])
+    data['playlist_id'] = playlist['id']
     return HttpResponse(json.dumps(data), content_type='application/json')
